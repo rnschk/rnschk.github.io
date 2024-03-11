@@ -1,0 +1,20 @@
+{
+  "name": "rnschk.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "npm run build && gh-pages -d dist -b ghp"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  }
+}
