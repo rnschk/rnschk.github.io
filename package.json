@@ -4,17 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
-    "predeploy": "npm run build",
-    "deploy": "npm run build && gh-pages -d dist -b ghp"
+    "pre-build": "uglifyjs src/app.js src/data.js -o dist/js/app.min.js -c -m && uglifycss src/style.css > dist/css/style.min.css",
+    "deploy": "gh-pages -d dist -b ghp"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "fr",
+  "license": "MIT",
   "devDependencies": {
     "gh-pages": "^6.1.1",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
+    "uglify-js": "3.17.4",
+    "uglifycss": "0.0.29"
+  },
+  "dependencies": {
   }
 }

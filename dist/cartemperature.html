@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <title>Temperaturberechnung im Auto | lama.vet</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hitzeentwicklung im Auto: Wie schnell heizt sich das Auto auf? Ab wann wird es gef&auml;hrlich für das Tier? - Jetzt hier brechnen | lama.vet Tierarzt">
+
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/chart.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <link href="css/style.min.css" media="all" rel="stylesheet">
+  <link href="css/bootstrap.min.css" media="all" rel="stylesheet">
+  <link href="css/fontawesome.all.min.css" media="all" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+
+      <a class="navbar-brand js-scroll-trigger truncate" href="#page-top">Temperaturberechnung im Auto</a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">lama.vet
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#description">Anmerkungen / Literatur</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Kontakt</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </nav>
+
+  <!-- content -->
+  <section id="lamavet">
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <!-- left column -->
+        <div class="col-lg-3 mx-auto">
+          <h1 class="mt-5">Berechnungstool</h1>
+          <p>Bitte vor der Verwendung die <a href="#description">Anmerkungen</a> unten studieren!</p>
+
+          <!-- inner temperature -->
+          <label for="begin_temp_id">Innentemperatur zu Beginn in °C</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">°C</span>
+            </div>
+            <input id="begin_temp_id" placeholder="Innentemperatur" type="number" step="1" min="0" max="50"
+              class="form-control" data-toggle="tooltip" data-placement="right" title="Innentemperatur in °C" />
+          </div>
+
+          <!-- outer temperature -->
+          <label for="outer_temp_id">Au&szlig;entemperatur in °C </label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">°C</span>
+            </div>
+            <input id="outer_temp_id" placeholder="Au&szlig;entemperatur" type="number" step="0.1" min="-20" max="50"
+              class="form-control" data-toggle="tooltip" data-placement="right" title="Au&szlig;entemperatur in °C" />
+          </div>
+
+          <!-- sunpower W/m2 -->
+          <label for="sunpower_id">Solare Strahlung in W/m²</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">W/m²</span>
+            </div>
+            <input id="sunpower_id" placeholder="Strahlungsleistung" type="number" step="1" min="0" max="2000"
+              class="form-control" data-toggle="tooltip" data-placement="right" title="Solare Strahlung in W/m²" />
+          </div>
+
+          <!-- calc_by_cloud -->
+          <div class="input-group mb-3 d-flex justify-content-end align-items-center">
+            <span></span>
+            <button id="btn_cloud_id" type="button" class="btn btn-primary right ml-3">Bew&ouml;lkungsgrad</button>
+          </div>
+
+          <div id="calc_by_cloud_ui" class="input-group mb-3" style="display: none;">
+            <!-- cloud % -->
+            <!-- <label for="cloud_id">Bew&ouml;lkung in %</label> -->
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">%</span>
+              </div>
+              <input id="cloud_id" placeholder="Bew&ouml;lkung in %" type="number" step="1" min="0" max="100"
+                class="form-control" data-toggle="tooltip" data-placement="right" title="Bew&ouml;lkung in %" />
+            </div>
+          </div>
+
+          <!-- open windows -->
+          <label for="window_space_id">Fenster&ouml;ffnungsbreite von min. 2 Fenstern</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">cm</span>
+            </div>
+            <input id="window_space_id" placeholder="Fenster&ouml;ffnungsbreite" type="number" step="0.5" min="0"
+              max="100" class="form-control" data-toggle="tooltip" data-placement="right"
+              title="&ouml;ffnungsbreite von mind. 2 ge&ouml;ffneten Fenstern" />
+          </div>
+
+          
+          <!-- windows_covered windows toggle: Fensterabdeckung-->
+          <!-- windows_covered -->
+          <div>
+            <div class="input-group mb-3">
+              <button id="btn_cover_id" type="button" class="btn btn-primary right">Fensterabdeckung</button>
+            </div>
+
+            <div id="windows_covered_ui" class="input-group mb-3" style="display: none;">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="windows_covered_paper" value="paper"
+                  name="windows_covered">
+                <label class="custom-control-label" for="windows_covered_paper">Zeitungspapier</label>
+              </div>
+
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="windows_covered_linen" value="linen"
+                  name="windows_covered">
+                <label class="custom-control-label" for="windows_covered_linen">Leinentuch</label>
+              </div>
+
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="windows_covered_foil" value="foil"
+                  name="windows_covered">
+                <label class="custom-control-label" for="windows_covered_foil">Aluminiumfolie</label>
+              </div>
+            </div>
+          </div> <!-- end of windows_covered -->
+
+          <div class="input-group mb-1" style="margin: 0px!important;"></div>
+
+          <!-- minutes -->
+          <label for="minutes_id">Dauer in Minuten</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">min</span>
+            </div>
+            <input id="minutes_id" placeholder="Minuten" type="number" step="1" min="0" max="60" class="form-control"
+              data-toggle="tooltip" data-placement="right" title="Dauer f&uuml;r die Berechnung in Minuten" />
+          </div>
+
+          <!-- button: berechnen -->
+          <button id="btn_berechnen_id" type="button" class="btn btn-primary float-right mt-3"
+            @click="update_temperature_chart(data); validate_ui(data);">Berechnen</button>
+
+          <div class="input-group mb-4" role="alert"></div>
+          <div id="notifications" class="alert alert-warning text-right" role="alert"
+            style="width: 100%; display: none;">Eingabedaten unvollst&auml;ndig.</div>
+
+
+          <div class="lines"></div>
+
+          <!-- balanced temperature -->
+          <label for="balanced_temperature_id">Gleichgewichtstemperatur in °C</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">°C</span>
+            </div>
+            <input id="balanced_temperature_id" placeholder="Gleichgewichtstemperatur" type="number"
+              class="form-control" disabled />
+          </div>
+
+          <!-- leaked temperature -->
+          <label for="leaked_temperature_id">Temperaturentweichung in °K</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">°K</span>
+            </div>
+            <input id="leaked_temperature_id" placeholder="Temperaturentweichung" type="number" class="form-control"
+              disabled />
+          </div>
+
+          <!-- calculated temperature after minutes -->
+          <label id="target_temperature_label" for="target_temperature_id">Berechnete Temperatur in °C</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-orange">°C</span>
+            </div>
+            <input id="target_temperature_id" placeholder="Berechnete Temperatur" type="number"
+              class="form-control bg-orange" disabled />
+          </div>
+          
+        </div> <!-- end of left column -->
+
+
+        <!-- right column -->
+        <div class="col-lg-8 text-center mx-auto">
+          <h1 class="mt-5">Verlauf</h1>
+          <p>W&auml;rmeentwicklung &uuml;ber 60 Minuten</p>
+
+          <div class="chart-container" style="position: relative; height:65vh">
+            <canvas id="heat_progress_chart"></canvas>
+          </div>
+
+        </div> <!-- end of right column -->
+      </div> <!-- end of row -->
+    </div> <!-- end of container-->
+  </section>
+
+
+  <section id="description" class="bg-light">
+
+    <div class="row">
+      <!-- zweite Zeile mit Anmerkungen -->
+
+      <!-- Anmerkungen -->
+      <div class="col-lg-5 text-left mx-auto">
+        <h2 class="mt-5">Anmerkungen</h2>
+        <text class="lead">
+          <p>
+            Dieses Berechnungstool dient zur Berechnung der Innentemperatur in
+            einem PKW nach einer bestimmten Zeit. Der Graph zeigt den Verlauf
+            der Temperatur im Fahrzeug an.
+          </p>
+          <p>
+            Die errechneten Werte k&ouml;nnen von der Realit&auml;t abweichen! Zur Entwicklung
+            der Formel wurde auf wissenschaftliche Literatur zur&uuml;ck gegriffen und ein
+            Durchschnitt der Ergebnisse der verschiedenen Autoren ermittelt.
+          </p>
+
+          <b>Innentemperatur zu Beginn in °C</b><br />
+          <p>
+            Die Innentemperatur eines klimatisierten Autos wird zu Beginn zwischen
+            21°C und 24°C betragen. Unklimatisierte Autos haben zu Beginn eine
+            Temperatur, die der Au&szlig;entemperatur entspricht.
+          </p>
+
+          <b>Au&szlig;entemperatur in °C</b><br />
+          <p>
+            Die Au&szlig;entemperatur entspricht der Lufttemperatur in °C am Ort des Fahrzeuges.
+          </p>
+
+          <b>Solare Strahlung in W/m²</b><br />
+          <p>
+            Die solare Strahlung l&auml;sst sich &uuml;ber den lokalen Wetterdienst erfragen. Ein
+            sonniger Tag kann &uuml;ber 1000 W/m² erreichen. Sind die genauen Strahlungsdaten nicht
+            verf&uuml;gbar, kann anhand der prozentualen Bew&ouml;lkung ein N&auml;herungswert errechnet werden.
+          </p>
+
+          <b>Bew&ouml;lkungsgrad</b><br />
+          <p>
+            Die solare Strahlung kann alternativ durch den Bew&ouml;lkungsgrad n&auml;herungsweise ermittelt werden,
+            wenn die
+            solare Strahlung nicht eruiert werden kann. Die Berechnung der solaren Strahlung anhand der prozentualen
+            Bew&ouml;lkung ist abh&auml;ngig von der Au&szlig;entemperatur.
+          </p>
+
+          <b>Fenster&ouml;ffnungsbreite</b><br />
+          <p>
+            Die Fenster&ouml;ffnung erzeugt einen Luftaustausch im stehenden Fahrzeug in beide
+            Richtungen! Liegt die Au&szlig;entemperatur &uuml;ber der Innentemperatur zu Beginn, wird die
+            Fenster&ouml;ffnung eine Erh&ouml;hung der Autoinnentemperatur erwirken. Dieses
+            Berechnungsmodell sieht vor, dass mindestens <b>zwei</b> gegen&uuml;berliegende Fenster ge&ouml;ffnet sind,
+            da bei
+            einem einzelnen ge&ouml;ffneten Fenster der Luftaustausch nahezu komplett zu vernachl&auml;ssigen ist,
+            außer es ist sehr weit ge&ouml;ffnet (im Realfall eher unwahrscheinlich).
+          </p>
+
+          <b>Fensterabdeckung</b><br />
+          <p>
+            Die Zusatzauswahl der Fensterabdeckung sollte nur gew&auml;hlt werden, wenn <b>alle</b> Fenster des Autos
+            mit dem ausgew&auml;hlten
+            Material vollst&auml;ndig abgedeckt wurden. Da sich nur eine Publikation mit diesen Bedingungen
+            besch&auml;ftigt hat, sind diese Werte vorsichtig zu bewerten.
+          </p>
+
+          <b>Dauer in Minuten</b><br />
+          <p>
+            Die Dauer in Minuten ist der Zeitraum in der das Auto den dar&uuml;ber eingegebenen
+            Bedingungen exponiert war.
+          </p>
+
+          <b>Gleichgewichtstemperatur in °C</b><br />
+          <p>
+            Die Gleichgewichtstemperatur ist die maximal erreichbare Temperatur im Auto in Abh&auml;ngigkeit von der
+            solaren Strahlung
+            und der Au&szlig;entemperatur. Es wird als "Gleichgewichtstemperatur" bezeichnet, da ab einer bestimmten
+            Hitzeentwicklung ein Gleichgewicht
+            zwischen der Hitze im Inneren und dessen Entweichung eintritt.
+          </p>
+
+          <b>Temperaturentweichung in °K</b><br />
+          <p>
+            Die Temperaturentweichung gibt den Kelvinwert an, der durch die gegebenenfalls ge&ouml;ffneten Fenster
+            entweicht. Ist der Wert
+            negativ, liegt in der Minute (Dauer in Minuten) die Au&szlig;entemperatur &uuml;ber der Innentemperatur. Das
+            hei&szlig;t
+            es str&ouml;mt warme Luft in den Innenraum.
+          </p>
+
+        </text>
+      </div> <!-- end of col -->
+
+      <!-- Literatur -->
+      <div class="col-lg-5 text-left mx-auto">
+        <h2 class="mt-5">Literatur</h2>
+        <text class="lead">
+          <p>
+            "Thermische Belastung von Kleintieren und Kleinkindern in abgestellten Kraftfahrzeugen" <br /> ANGENBAUER
+            (2011)</p>
+          <p>
+            Gleichgewichtstemperatur nach: <br /> GRUNDSTEIN et al. (2009)</p>
+          <p>
+            Basis des Umrechnungstools anhand der Bew&ouml;lkung: <br /> GRUNDSTEIN et al. (2009)</p>
+          <p>
+            Basis der Temperaturentwicklungsformel:
+            <br /> Mc LAREN et al. (2005)
+            <br />NG’WALALI et al. (1998)
+            <br />GREGORY und CONSTANTINE (1996)
+            <br />GIBBS et al. (1995)
+            <br />JASCHA (1982)
+            <br />KING et al. (1981)
+            <br />ROBERTS und ROBERTS (1976)
+          </p>
+          <p>
+            Basis der Fensterformel: <br />KING et al. (1982)</p>
+          <p>
+            Abdeckung der Fenster: <br />JASCHA (1982)
+        </text>
+      </div> <!-- end of col -->
+    </div> <!-- end of row -->
+  </section>
+
+
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-3">
+          <div class="card">
+            <h3>T. Liening-Ewert</h3>
+            <p class="title">Dr.</p>
+            <p class="title">Tierarzt</p>
+            <p>Land Tirol</p>
+            <p>
+              <a tabIndex="-1" id="mail_tle" title="E-Mail"><i class="fas fa-envelope-square"></i></a>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card">
+            <h3>F. Runschke</h3>
+            <p class="title">M.Sc.</p>
+            <p class="title">Developer</p>
+            <p>viadee AG</p>
+            <p>
+              <a tabIndex="-1" id="mail_fr" title="E-Mail"><i class="fas fa-envelope-square"></i></a>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3"> </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-2 bg-dark position-relative">
+    <div id="impress_container_id" class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center text-white">
+          <p>
+            Copyright © lama.vet
+            &middot;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+            &middot;
+            <span>
+              <a tabIndex="-1" href="imprint.html" style="cursor: pointer;"
+                class="text-white">Impressum</a>
+            </span>
+          </p>
+
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick" />
+            <input type="hidden" name="hosted_button_id" value="6UMDFQEQ44RJE" />
+            <input tabIndex="-1" type="image" src="img/btn_donateCC_LG.gif" name="submit"
+              title="Vielen Dank f&uuml;r Ihre Spende!" alt="Vielen Dank f&uuml;r Ihre Spende!" />
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <picture>
+      <source srcset="img/dog.webp" type="image/webp">
+      <source srcset="img/dog.png" type="image/png"> 
+      <img id="doggo_id" src="img/dog.png" class="wow fadeInUp doggy" />
+    </picture>
+    
+  </footer>
+
+</body>
+
+</html>
